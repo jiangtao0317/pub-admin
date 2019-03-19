@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookRespo extends JpaRepository<BookEntity,Long> {
+
+    BookEntity findFirstBySeqid(Long seqid);
 }

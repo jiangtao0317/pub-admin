@@ -1,4 +1,4 @@
-package com.fanle.moka.config;
+package com.fanle.moka.config.datasource;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,7 +26,7 @@ import javax.sql.DataSource;
         transactionManagerRef = "bookTransactionManager",
         basePackages = {"com.fanle.moka.respo"}) //设置Repository所在位置
 
-//@PropertySource(value = "classpath:application-datasource.properties")
+@PropertySource(value = "classpath:application-datasource.properties")
 public class DataSourceBookConfig {
 
     @Autowired

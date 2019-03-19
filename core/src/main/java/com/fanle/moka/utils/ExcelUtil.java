@@ -1,12 +1,14 @@
 package com.fanle.moka.utils;
 
-
 import com.fanle.moka.annotation.Excel;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.xssf.usermodel.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
@@ -99,12 +101,16 @@ public class ExcelUtil<T> {
                     r++;
                     continue ;
                 }
-                /*if(excel.statusClass().equals(ContractStatusEnum.class)){
-                    Object o = getFieldValueByName(fields[i].getName(),t);
-                    if(o!=null){
-                        String value = ContractStatusEnum.values()
-                    }
-                }*/
+//                if(excel.statusClass().equals(BaseEnum.class)){
+//                    Object o = getFieldValueByName(fields[i].getName(),t);
+//                    if(o!=null){
+//                        if(o.getClass().equals(BaseEnum.getKeyType(o).getClass())){
+//
+//                            String value = BaseEnum.getName();
+//                        }
+//
+//                    }
+//                }
                 Object o = getFieldValueByName(fields[i].getName(),t);
                 if(o!=null){
                     row.createCell(r).setCellValue(o.toString());
@@ -150,6 +156,36 @@ public class ExcelUtil<T> {
 
         //如果本类和父类都没有，则返回空
         return null;
+    }
+
+    public void export(String filename,HttpServletResponse response,List<T> list){
+        try {
+            XSSFWorkbook workbook = this.getXSSFWorkbook("default",list,null);
+            this.setResponseHeader(response, filename);
+            OutputStream os = response.getOutputStream();
+            workbook.write(os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setResponseHeader(HttpServletResponse response, String fileName) {
+        try {
+            try {
+                fileName = new String(fileName.getBytes(),"ISO8859-1");
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            response.setContentType("application/octet-stream;charset=ISO8859-1");
+            response.setHeader("Content-Disposition", "attachment;filename="+ fileName);
+            response.addHeader("Pargam", "no-cache");
+            response.addHeader("Cache-Control", "no-cache");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }
