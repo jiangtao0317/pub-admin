@@ -36,7 +36,7 @@ public class ActivityAllDataController {
                         @RequestParam("endDate")String endDate,
                         @RequestParam("type")String type,
                         HttpServletResponse response){
-        Set<String> names = BaseEnum.nameValues(ActivityEnum.values());
+        Set<String> keys = BaseEnum.keyValues(ActivityEnum.values());
         startDate += " 00:00:00";
         endDate += " 23:59:59";
         String condition  ;
@@ -73,7 +73,7 @@ public class ActivityAllDataController {
                 "\tAND\n" +
                 "\t(`event` = 'activityPV' or `event` = 'acitivityPV') \n" +
                 "\tAND\n" +
-                "\taid IN \n" +BaseService.collectionToString(names)+"\n"+
+                "\taid IN \n" +BaseService.collectionToString(keys)+"\n"+
                 condition+
                 "\tGROUP BY\n" +
                 "\tSUBSTR( datetime, 1, 10 );";
@@ -92,7 +92,7 @@ public class ActivityAllDataController {
     public void outUv(@RequestParam("startDate")String startDate,
                         @RequestParam("endDate")String endDate,
                         HttpServletResponse response){
-        Set<String> names = BaseEnum.nameValues(ActivityEnum.values());
+        Set<String> keys = BaseEnum.keyValues(ActivityEnum.values());
         startDate += " 00:00:00";
         endDate += " 23:59:59";
         String sql = "SELECT\n" +
@@ -107,7 +107,7 @@ public class ActivityAllDataController {
                 "\tAND\n" +
                 "\t(`event` = 'activityPV' or `event` = 'acitivityPV') \n" +
                 "\tAND\n" +
-                "\taid IN \n" +BaseService.collectionToString(names)+"\n"+
+                "\taid IN \n" +BaseService.collectionToString(keys)+"\n"+
                 "\tGROUP BY\n" +
                 "\tSUBSTR( datetime, 1, 10 )";
         String filename = "活动总pv" ;
@@ -126,7 +126,7 @@ public class ActivityAllDataController {
     public void active(@RequestParam("startDate")String startDate,
                         @RequestParam("endDate")String endDate,
                         HttpServletResponse response){
-        Set<String> names = BaseEnum.nameValues(ActivityEnum.values());
+        Set<String> keys = BaseEnum.keyValues(ActivityEnum.values());
         startDate += " 00:00:00";
         endDate += " 23:59:59";
         String sql = "SELECT\n" +
@@ -139,7 +139,7 @@ public class ActivityAllDataController {
                 "\tAND\n" +
                 "\tfirstStartTime <= ?2\n" +
                 "\tAND\n" +
-                "\taid IN \n" +BaseService.collectionToString(names)+"\n"+
+                "\taid IN \n" +BaseService.collectionToString(keys)+"\n"+
                 "GROUP BY\n" +
                 "SUBSTR( firstStartTime, 1, 10 )";
         String filename = "活动总激活uv(设备)" ;

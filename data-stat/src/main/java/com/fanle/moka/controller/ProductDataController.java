@@ -168,10 +168,7 @@ public class ProductDataController {
             ListContentFormatService<ReadPathPv,ProductReadPathFormatVo> format =  (List<ReadPathPv> sourceList, List<ProductReadPathFormatVo> targetList) -> {
                 Map<String,ProductReadPathFormatVo> maps = Maps.newHashMap() ;
                 sourceList.forEach(source -> {
-                    ProductReadPathFormatVo target = maps.get(source.getDate());
-                    if(!maps.keySet().contains(source.getDate())){
-                        target = new ProductReadPathFormatVo() ;
-                    }
+                    ProductReadPathFormatVo target = getProductReadPathFormatVo(maps, source.getDate());
                     target.setDate(source.getDate());
                     for(String name: BaseEnum.nameValues(ReadPathEnum.values())){
                         String key = BaseEnum.getKey(name,ReadPathEnum.values());
@@ -197,10 +194,7 @@ public class ProductDataController {
             ListContentFormatService<ReadPathUv,ProductReadPathFormatVo> format =  (List<ReadPathUv> sourceList, List<ProductReadPathFormatVo> targetList) -> {
                 Map<String,ProductReadPathFormatVo> maps = Maps.newHashMap() ;
                 sourceList.forEach(source -> {
-                    ProductReadPathFormatVo target = maps.get(source.getDate());
-                    if (!maps.keySet().contains(source.getDate())) {
-                        target = new ProductReadPathFormatVo();
-                    }
+                    ProductReadPathFormatVo target = getProductReadPathFormatVo(maps, source.getDate());
                     target.setDate(source.getDate());
                     for (String name : BaseEnum.nameValues(ReadPathEnum.values())) {
                         String key = BaseEnum.getKey(name, ReadPathEnum.values());
@@ -225,6 +219,14 @@ public class ProductDataController {
         }
 
 
+    }
+
+    private ProductReadPathFormatVo getProductReadPathFormatVo(Map<String, ProductReadPathFormatVo> maps, String date) {
+        ProductReadPathFormatVo target = maps.get(date);
+        if (!maps.keySet().contains(date)) {
+            target = new ProductReadPathFormatVo();
+        }
+        return target;
     }
 
 }

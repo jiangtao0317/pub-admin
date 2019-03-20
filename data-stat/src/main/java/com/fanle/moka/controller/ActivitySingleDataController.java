@@ -46,11 +46,11 @@ public class ActivitySingleDataController {
                 filename = "单个活动累计uv(用户)";
                 break;
             case "out":
-                condition = "\tAND browser not in (  'androidApp','iosApp' )\n";
+                condition = "\tAND browser not in ('androidApp','iosApp')\n";
                 filename = "单个活动站外uv(用户)";
                 break;
             case "in":
-                condition = "\tAND browser  in (  'androidApp','iosApp' )\n";
+                condition = "\tAND browser  in ('androidApp','iosApp' )\n";
                 filename = "单个活动站内uv(用户)";
                 break;
             default:
@@ -60,13 +60,13 @@ public class ActivitySingleDataController {
         if (StringUtils.isEmpty(condition)) {
             return ;
         }
-        Set<String> names = BaseEnum.nameValues(ActivityEnum.values());
-        names.remove(ActivityEnum.MKSTORE_REDBAG); //小程序拆红包活动只有站外 ，uv单算
+        Set<String> keys = BaseEnum.keyValues(ActivityEnum.values());
+        keys.remove(ActivityEnum.MKSTORE_REDBAG.getKey()); //小程序拆红包活动只有站外 ，uv单算
         startDate += " 00:00:00";
         endDate += " 23:59:59";
         String sql = "SELECT\n" +
                 "\tcase aid \n" ;
-        sql += BaseService.getCaseWhen(sql, ActivityEnum.values());
+        sql = BaseService.getCaseWhen(sql, ActivityEnum.values());
         String endSql = "\tend activity,\n" +
                 "\tSUBSTR( datetime, 1, 10 ) date,\n" +
                 "\tcount( DISTINCT unionid ) uv\n" +
@@ -78,7 +78,7 @@ public class ActivitySingleDataController {
                 "\tdatetime <= ?2\n" +
                 "\tAND\n" +
                 "\t(`event` = 'activityPV' or `event` = 'acitivityPV')\n" +
-                "\tAND aid IN \n" +BaseService.collectionToString(names)+
+                "\tAND aid IN \n" +BaseService.collectionToString(keys)+
                 condition+
                 "GROUP BY\n" +
                 "\tSUBSTR( datetime, 1, 10 ),\n" +
@@ -100,9 +100,7 @@ public class ActivitySingleDataController {
     public void mkstore(@RequestParam("startDate")String startDate,
                       @RequestParam("endDate")String endDate,
                       HttpServletResponse response){
-        String filename = "小程序拆红包";
-        Set<String> names = BaseEnum.nameValues(ActivityEnum.values());
-        names.remove(ActivityEnum.MKSTORE_REDBAG);
+        String filename = "小程序拆红包uv";
         startDate += " 00:00:00";
         endDate += " 23:59:59";
         String sql = "SELECT\n" +
@@ -127,7 +125,7 @@ public class ActivitySingleDataController {
 
 
     /**
-     * 活动PV
+     * 活动PV(包括小程序)
      * @param startDate
      * @param endDate
      * @param response
@@ -138,10 +136,10 @@ public class ActivitySingleDataController {
                       HttpServletResponse response){
         startDate += " 00:00:00";
         endDate += " 23:59:59";
-        Set<String> names = BaseEnum.nameValues(ActivityEnum.values());
+        Set<String> keys = BaseEnum.keyValues(ActivityEnum.values());
         String sql = "SELECT\n" +
                 "\tcase aid \n" ;
-        sql += BaseService.getCaseWhen(sql, ActivityEnum.values());
+        sql = BaseService.getCaseWhen(sql, ActivityEnum.values());
         String endSql = "\tend activity,\n" +
                 "\tSUBSTR( datetime, 1, 10 ) date,\n" +
                 "\tcount( * ) pv\n" +
@@ -153,9 +151,9 @@ public class ActivitySingleDataController {
                 "\tdatetime <= ?2\n" +
                 "\tAND\n" +
                 "\t(`event` = 'activityPV' or `event` = 'acitivityPV')\n" +
-                "\tAND aid IN  \n" +BaseService.collectionToString(names)+
+                "\tAND aid IN  \n" +BaseService.collectionToString(keys)+
                 "\tGROUP BY\n" +
-                "\tSUBSTR( datetime, 1, 10 ),aid;";
+                "\tSUBSTR( datetime, 1, 10 ),aid";
         sql += endSql ;
         String filename = "单个活动累计pv" ;
         log.info("{}:sql===={}",filename,sql);
@@ -173,15 +171,15 @@ public class ActivitySingleDataController {
     public void active(@RequestParam("startDate")String startDate,
                       @RequestParam("endDate")String endDate,
                       HttpServletResponse response){
-        Set<String> names = BaseEnum.nameValues(ActivityEnum.values());
+        Set<String> keys = BaseEnum.keyValues(ActivityEnum.values());
         startDate += " 00:00:00";
         endDate += " 23:59:59";
         String sql = "SELECT\n" +
                 "\tcase aid \n" ;
-        sql += BaseService.getCaseWhen(sql, ActivityEnum.values());
+        sql = BaseService.getCaseWhen(sql, ActivityEnum.values());
         String endSql = "\tend activity,\n" +
-                "\tSUBSTR( datetime, 1, 10 ) date,\n" +
-                "\tcount( * ) uv\n" +
+                "\tSUBSTR( firstStartTime, 1, 10 ) date,\n" +
+                "\tcount( DISTINCT sDeviceId ) uv \n" +
                 "\tFROM\n" +
                 "\t"+ DataBaseConstant.WENXUE_STAT +".moka_stat_appstart \n" +
                 "\tWHERE\n" +
@@ -189,7 +187,7 @@ public class ActivitySingleDataController {
                 "\tAND\n" +
                 "\tfirstStartTime <= ?2\n" +
                 "\tAND\n" +
-                "\taid IN \n" +BaseService.collectionToString(names)+
+                "\taid IN \n" +BaseService.collectionToString(keys)+
                 "\tGROUP BY\n" +
                 "\tSUBSTR( firstStartTime, 1, 10 ),\n" +
                 "\taid\n";
