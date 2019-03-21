@@ -4,6 +4,8 @@ import com.fanle.moka.constant.ActivityEnum;
 import com.fanle.moka.constant.DataBaseConstant;
 import com.fanle.moka.constant.base.BaseEnum;
 import com.fanle.moka.service.BaseService;
+import com.fanle.moka.service.ExportExcelService;
+import com.fanle.moka.service.NativeQueryBaseService;
 import com.fanle.moka.vo.DataPv;
 import com.fanle.moka.vo.DataUv;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -23,6 +26,12 @@ public class ActivityAllDataController {
 
     @Autowired
     BaseService baseService;
+
+    @Autowired
+    NativeQueryBaseService nativeQueryBaseService ;
+
+    @Autowired
+    ExportExcelService exportExcelService ;
 
     /**
      * #活动UV
@@ -79,7 +88,9 @@ public class ActivityAllDataController {
                 "\tSUBSTR( datetime, 1, 10 );";
         log.info("{}:sql===={}",filename,sql);
         filename+=".xlsx";
-        baseService.export(filename,null,response,sql, DataUv.class,startDate,endDate);
+        List<DataUv> list = nativeQueryBaseService.nativeQuery(sql,DataUv.class,startDate,endDate);
+        exportExcelService.export(filename,response,null,list);
+        //baseService.export(filename,null,response,sql, DataUv.class,startDate,endDate);
     }
 
     /**
@@ -113,7 +124,9 @@ public class ActivityAllDataController {
         String filename = "活动总pv" ;
         log.info("{}:sql===={}",filename,sql);
         filename+=".xlsx";
-        baseService.export(filename,null,response,sql, DataPv.class,startDate,endDate);
+        List<DataPv> list = nativeQueryBaseService.nativeQuery(sql, DataPv.class,startDate,endDate);
+        exportExcelService.export(filename,response,null,list);
+        //baseService.export(filename,null,response,sql, DataPv.class,startDate,endDate);
     }
 
     /**

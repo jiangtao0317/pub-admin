@@ -19,6 +19,8 @@
         <module>core</module>
         <module>data-stat</module>
         <module>script</module>
+        <module>data-service</module>
+        <module>data-common-service</module>
     </modules>
 
     <properties>

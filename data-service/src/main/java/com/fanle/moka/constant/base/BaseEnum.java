@@ -6,7 +6,6 @@ import java.util.Set;
 
 public interface BaseEnum<I,N> extends TopBaseEnum<I,N>{
 
-
     /**
      * 通过第一个参数值（key）获取枚举类第二个参数值（name）
      * @param key

@@ -1,7 +1,6 @@
 package com.fanle.moka.config;
 
 import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.property.access.internal.PropertyAccessStrategyBasicImpl;
 import org.hibernate.property.access.internal.PropertyAccessStrategyChainedImpl;
 import org.hibernate.property.access.internal.PropertyAccessStrategyFieldImpl;
@@ -76,9 +75,9 @@ public class CustomAliasToBeanResultTransformer extends AliasToBeanResultTransfo
             for(int i = 0; i < aliases.length; ++i) {
                 if (this.setters[i] != null) {
                     if (tuple[i].getClass().equals(BigDecimal.class)) {
-                        this.setters[i].set(result, ((BigDecimal)tuple[i]).longValue(), (SessionFactoryImplementor)null);
+                        this.setters[i].set(result, ((BigDecimal)tuple[i]).longValue(), null);
                     }else{
-                        this.setters[i].set(result, tuple[i], (SessionFactoryImplementor)null);
+                        this.setters[i].set(result, tuple[i], null);
                     }
 
                 }

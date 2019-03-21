@@ -104,6 +104,7 @@ public class ExcelUtil<T> {
 //                if(excel.statusClass().equals(BaseEnum.class)){
 //                    Object o = getFieldValueByName(fields[i].getName(),t);
 //                    if(o!=null){
+//
 //                        if(o.getClass().equals(BaseEnum.getKeyType(o).getClass())){
 //
 //                            String value = BaseEnum.getName();

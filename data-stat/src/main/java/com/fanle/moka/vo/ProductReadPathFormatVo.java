@@ -34,4 +34,22 @@ public class ProductReadPathFormatVo {
     private long librarySortTop10EnterBookDetailToReader = 0;
     @Excel(name = "书会共读进入-书籍详情")
     private long clubReadTogetherEnterBookDetailToReader = 0;
+    @Excel(name = "书库免费-限时免费")
+    private long libraryFreeWithTimeEnterBookDetailToReader = 0;
+    @Excel(name = "书库精选-书籍详情")
+    private long librarySelectedEnterBookDetailToReader = 0;
+    @Excel(name = "书库男生-书籍详情")
+    private long libraryBoyEnterBookDetailToReader = 0;
+    @Excel(name = "书库女生-书籍详情")
+    private long libraryGirlEnterBookDetailToReader = 0;
+    @Excel(name = "书库出版-书籍详情")
+    private long libraryPublishEnterBookDetailToReader = 0;
+    @Excel(name = "书库分类-书籍详情")
+    private long librarySortListEnterBookDetailToReader = 0;
+    @Excel(name = "书库排行榜-书籍详情")
+    private long libraryRankListEnterBookDetailToReader = 0;
+    @Excel(name = "书库免费-书籍详情")
+    private long libraryFreeEnterBookDetailToReader = 0;
+    @Excel(name = "书籍详情")
+    private long defaultBookDetailToReader = 0;
 }

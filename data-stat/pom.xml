@@ -166,7 +166,8 @@
 
         <dependency>
             <groupId>com.fanle.moka</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>data-service</artifactId>
+            <version>${version}</version>
         </dependency>
 
         <dependency>

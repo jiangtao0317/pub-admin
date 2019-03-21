@@ -10,7 +10,5 @@ import java.util.List;
  */
 public interface ListContentFormatService<S,T> {
 
-    default List<T> format(List<T> targetList) { return targetList ; }
-
     List<T> format(List<S> sourceList, List<T> targetList) ;
 }

@@ -11,7 +11,7 @@ public @interface Excel {
 
     String name() default "";
 
-    Class statusClass() default Class.class;
+    Class<?> statusClass() default Class.class;
 
     String exportFormat() default "" ;
 
