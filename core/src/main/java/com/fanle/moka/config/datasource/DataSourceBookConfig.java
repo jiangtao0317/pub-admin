@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(
         entityManagerFactoryRef = "bookEntityManagerFactory",
         transactionManagerRef = "bookTransactionManager",
-        basePackages = {"com.fanle.moka.respo"}) //设置Repository所在位置
+        basePackages = {"com.fanle.moka.respo.book"}) //设置Repository所在位置
 
 @PropertySource(value = "classpath:application-datasource.properties")
 public class DataSourceBookConfig {

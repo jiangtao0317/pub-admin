@@ -70,11 +70,11 @@ public interface BaseEnum<I,N> extends TopBaseEnum<I,N>{
         return sets ;
     }
 
-    static <I,N> Class<I> getKeyType(I key){
+    static <I> Class<I> getKeyType(I key){
         return (Class<I>)key.getClass() ;
     }
 
-    static <I,N> Class<N> getNameType(N name){
+    static <N> Class<N> getNameType(N name){
         return (Class<N>)name.getClass() ;
     }
 }

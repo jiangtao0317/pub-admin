@@ -8,4 +8,12 @@ public class StringTransferUtil {
         else
             return (new StringBuilder()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
     }
+
+    public static String startDateStr(String dateStr){
+        return dateStr + " 00:00:00";
+    }
+
+    public static String endDateStr(String dateStr){
+        return dateStr + " 23:59:59";
+    }
 }

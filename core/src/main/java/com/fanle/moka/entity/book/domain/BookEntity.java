@@ -104,7 +104,7 @@ public class BookEntity {
     }
 
     @Basic
-    @Column(name = "desc")
+    @Column(name = "[desc]")
     public String getDesc() {
         return desc;
     }
@@ -144,7 +144,7 @@ public class BookEntity {
     }
 
     @Basic
-    @Column(name = "grant")
+    @Column(name = "[grant]")
     public String getGrant() {
         return grant;
     }

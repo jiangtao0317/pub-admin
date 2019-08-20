@@ -1,7 +1,7 @@
 package com.fanle.moka.controller;
 
 
-import com.fanle.moka.respo.BookRespo;
+import com.fanle.moka.respo.book.BookRespo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

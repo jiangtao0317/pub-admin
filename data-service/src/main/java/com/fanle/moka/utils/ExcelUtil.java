@@ -7,8 +7,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.xssf.usermodel.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
@@ -170,6 +169,27 @@ public class ExcelUtil<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    public void exportToFile(String filename,List<T> list) throws IOException, IllegalAccessException {
+        XSSFWorkbook workbook = this.getXSSFWorkbook("default",list,null);
+        File file =new File(filename) ;
+
+        // 文件对象创建后，指定的文件或目录不一定物理上存在
+        if (!file.getParentFile().exists()&&!file.isDirectory()){
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        } else {
+            file.createNewFile();
+        }
+
+        OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+        workbook.write(os);
+        os.flush();
+        os.close();
+
     }
 
     public void setResponseHeader(HttpServletResponse response, String fileName) {

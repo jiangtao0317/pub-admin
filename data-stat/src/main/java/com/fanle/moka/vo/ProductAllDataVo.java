@@ -26,4 +26,7 @@ public class ProductAllDataVo {
     private long shareAppPvSum =0;
     @Excel(name="app内分享UV")
     private long shareAppUvSum =0 ;
+
+    @Excel(name="新增启动")
+    private long addAppStart = 0 ;
 }
